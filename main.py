@@ -25,14 +25,32 @@ def naver_blog_macro():
         print("네이버 블로그 홈으로 이동 중...")
         driver.get("https://blog.naver.com")
 
-        # 사용자가 로그인할 시간을 줍니다.
-        print("로그인이 필요합니다. 30초 안에 로그인 해주세요.")
-        time.sleep(15)  # 사용자가 로그인할 수 있도록 30초 대기
+        # 로그인 페이지로 이동합니다.
+        print("로그인 페이지로 이동합니다.")
+        driver.get("https://nid.naver.com/nidlogin.login")
+
+        # 보안을 위해 실제 ID와 PW를 입력해야 합니다.
+        NAVER_ID =
+        NAVER_PW =
+        time.sleep(0.2);
+        # ID 입력 필드를 찾아 아이디를 입력합니다.
+        id_input = driver.find_element(By.ID, 'id')
+        id_input.send_keys(NAVER_ID)
+        time.sleep(0.2);
+        # PW 입력 필드를 찾아 비밀번호를 입력합니다.
+        pw_input = driver.find_element(By.ID, 'pw')
+        pw_input.send_keys(NAVER_PW)
+
+        time.sleep(2)
+        # 로그인 버튼을 클릭합니다.
+        login_button = driver.find_element(By.ID, 'log.login')
+        login_button.click()
 
         # 로그인 후 이웃새글 섹션이 나타날 때까지 기다립니다.
         print("로그인 중...")
         try:
             # 이웃새글 섹션의 부모 요소를 찾을 때까지 최대 10초 대기합니다.
+            driver.get("https://blog.naver.com")
             WebDriverWait(driver, 15).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, '.list_post_article'))
             )
