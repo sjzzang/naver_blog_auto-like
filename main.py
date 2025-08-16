@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 
 
 def naver_blog_macro():
@@ -15,11 +17,15 @@ def naver_blog_macro():
     print("네이버 블로그 매크로를 시작합니다.")
 
     # ChromeDriver를 자동으로 설치 및 설정합니다.
-    chromedriver_autoinstaller.install()
+#    chromedriver_autoinstaller.install()
 
     # Chrome WebDriver를 설정합니다.
-    driver = webdriver.Chrome()
+#    driver = webdriver.Chrome()
+    driver_path = r'E:\Project\Python\auto_like\venv\lib\site-packages\chromedriver_autoinstaller\138\chromedriver.exe'
 
+# Service 객체에 드라이버 경로를 전달하여 드라이버를 실행합니다.
+    service = Service(driver_path)
+    driver = webdriver.Chrome(service=service)
     try:
         # 네이버 블로그 홈으로 이동합니다.
         print("네이버 블로그 홈으로 이동 중...")
@@ -30,28 +36,26 @@ def naver_blog_macro():
         driver.get("https://nid.naver.com/nidlogin.login")
 
         # 보안을 위해 실제 ID와 PW를 입력해야 합니다.
-        NAVER_ID =
-        NAVER_PW =
-        time.sleep(0.2);
+
+        #time.sleep(1)
         # ID 입력 필드를 찾아 아이디를 입력합니다.
-        id_input = driver.find_element(By.ID, 'id')
-        id_input.send_keys(NAVER_ID)
-        time.sleep(0.2);
+        #id_input = driver.find_element(By.ID, 'id')
+        #id_input.send_keys(NAVER_ID)
+        #time.sleep(2)
         # PW 입력 필드를 찾아 비밀번호를 입력합니다.
-        pw_input = driver.find_element(By.ID, 'pw')
-        pw_input.send_keys(NAVER_PW)
-
-        time.sleep(2)
+        #pw_input = driver.find_element(By.ID, 'pw')
+        #pw_input.send_keys(NAVER_PW)
+        #time.sleep(2)
         # 로그인 버튼을 클릭합니다.
-        login_button = driver.find_element(By.ID, 'log.login')
-        login_button.click()
-
+        #login_button = driver.find_element(By.ID, 'log.login')
+        #login_button.click()
+        #time.sleep(10)
         # 로그인 후 이웃새글 섹션이 나타날 때까지 기다립니다.
         print("로그인 중...")
         try:
             # 이웃새글 섹션의 부모 요소를 찾을 때까지 최대 10초 대기합니다.
             driver.get("https://blog.naver.com")
-            WebDriverWait(driver, 15).until(
+            WebDriverWait(driver, 60).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, '.list_post_article'))
             )
             print("로그인이 완료되었습니다. 이웃새글 섹션이 확인되었습니다. 매크로를 시작합니다.")
@@ -87,13 +91,13 @@ def naver_blog_macro():
                     like_button = post_to_process.find_element(By.CSS_SELECTOR, '.u_likeit_list_btn._button.off')
                     print("공감 버튼을 클릭합니다.")
                     like_button.click()
-                    time.sleep(0.3)  # 공감 처리 대기
+                    time.sleep(0.2)  # 공감 처리 대기
 
                     # 게시물 내의 '숨기기' (X) 버튼을 찾습니다.
                     hide_button = post_to_process.find_element(By.CSS_SELECTOR, '.button_del_post')
                     print("게시물 숨기기(X) 버튼을 클릭합니다.")
                     hide_button.click()
-                    time.sleep(0.3)  # 숨기기 처리 대기
+                    time.sleep(0.2)  # 숨기기 처리 대기
 
                     print("게시물 처리가 완료되었습니다. 다음 게시물을 처리합니다.")
 
